@@ -1,0 +1,6 @@
+.DS_Store
+cnn_model/Data
+flask_backend/an
+flask_backend/foot
+frontend/node_modules
+node_backend/node_modules
