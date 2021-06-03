@@ -27,6 +27,7 @@ The purpose of this repository is to collate the development of the project.
 ## Sub-Processes Interaction
 
 `<work in progress>`
+![Alt text](assets/api_subprocess.png)
 
 ## Repository Structure
 
