@@ -1,6 +1,9 @@
 .DS_Store
+cnn_model/.ipynb_checkpoints
 cnn_model/Data
-flask_backend/an
-flask_backend/foot
+flask_backend/models/.ipynb_checkpoints
+flask_backend/__pycache__
+flask_backend/utils/__pycache__
 frontend/node_modules
 node_backend/node_modules
+node_backend/.env
