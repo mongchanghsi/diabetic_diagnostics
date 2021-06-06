@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: thesis
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  nodejs:
+    image: thesis_node_backend
+    build: ./
+    depends_on:
+      - db
+    ports:
+      - '4000:4000'
