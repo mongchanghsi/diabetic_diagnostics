@@ -2,10 +2,23 @@ import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 
 export const createTypeormConn = async (): Promise<void> => {
   const connectionOptions = await getConnectionOptions();
-  await createConnection({
-    ...connectionOptions,
-    name: 'default',
-  });
+
+  let retry = 5;
+
+  while (retry) {
+    try {
+      await createConnection({
+        ...connectionOptions,
+        name: 'default',
+      });
+      break;
+    } catch (error) {
+      console.log(error);
+      retry -= 1;
+      // Wait for 5 seconds before trying to connect again
+      await new Promise((res) => setTimeout(res, 5000));
+    }
+  }
 };
 
 export const closeTypeormConn = async (): Promise<void> => {
