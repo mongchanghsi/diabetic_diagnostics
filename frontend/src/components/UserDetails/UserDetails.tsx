@@ -2,23 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import store from '../../store';
 import './UserDetails.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { ApiService } from '../../utils/api/apiService';
 
 const UserDetails: React.FC = () => {
   const history = useHistory();
+  const location: any = useLocation();
   const [data, setData] = useState<any>({
     nric: '',
-    birthdate: '',
-    lastCheckUp: '',
-    status: '',
-    height: '',
-    weight: '',
+    birthdate: location.state.data.dateOfBirth.slice(0, 10),
+    lastCheckUp: location.state.data.lastCheckUp.slice(0, 10),
+    status: !location.state.data.status ? 'Healthy' : 'At Risk',
+    height: location.state.data.height || 0,
+    weight: location.state.data.weight || 0,
   });
+  const [error, setError] = useState<string>('');
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(data);
-    history.push('/an');
+    const result = await ApiService.update(data.nric, data.height, data.weight);
+    if (result.status === 200) {
+      setError('');
+      history.push('/an');
+    } else {
+      setError('Something went wrong. Please try again later.');
+    }
   };
 
   useEffect(() => {
@@ -49,7 +57,7 @@ const UserDetails: React.FC = () => {
         </Card.Text>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId='formHeight'>
-            <Form.Label>Height</Form.Label>
+            <Form.Label>Height (cm)</Form.Label>
             <Form.Control
               type='string'
               placeholder='Enter your height'
@@ -58,7 +66,7 @@ const UserDetails: React.FC = () => {
             />
           </Form.Group>
           <Form.Group controlId='formWeight'>
-            <Form.Label>Weight</Form.Label>
+            <Form.Label>Weight (kg)</Form.Label>
             <Form.Control
               type='string'
               placeholder='Enter your weight'
@@ -69,6 +77,7 @@ const UserDetails: React.FC = () => {
           <Button variant='primary' type='submit'>
             Continue
           </Button>
+          {error && <p>{error}</p>}
         </Form>
       </Card.Body>
     </Card>

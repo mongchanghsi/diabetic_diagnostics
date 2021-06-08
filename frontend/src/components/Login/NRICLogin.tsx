@@ -4,15 +4,27 @@ import './Login.css';
 import { useHistory } from 'react-router-dom';
 import store from '../../store';
 import { updateNRIC } from '../../utils/actions/actions';
+import { ApiService } from '../../utils/api/apiService';
 
 const NRICLogin: React.FC = () => {
   const history = useHistory();
   const [nric, setNRIC] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    store.dispatch(updateNRIC(nric));
-    history.push('/userdetails');
+    const result = await ApiService.login(nric);
+    if (result.status === 200) {
+      store.dispatch(updateNRIC(nric));
+      // history.push('/userdetails');
+      setError('');
+      history.push({
+        pathname: '/userdetails',
+        state: { data: result.data },
+      });
+    } else {
+      setError('Something went wrong. Please try again later.');
+    }
   };
 
   return (
@@ -28,6 +40,7 @@ const NRICLogin: React.FC = () => {
               value={nric}
               onChange={(e) => setNRIC(e.target.value)}
             />
+            {error && <p>{error}</p>}
           </Form.Group>
           <Button variant='primary' type='submit'>
             Submit
