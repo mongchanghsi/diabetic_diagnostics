@@ -5,5 +5,7 @@ flask_backend/models/.ipynb_checkpoints
 flask_backend/__pycache__
 flask_backend/utils/__pycache__
 frontend/node_modules
+frontend/.env
 node_backend/node_modules
 node_backend/.env
+node_backend/pgdata
