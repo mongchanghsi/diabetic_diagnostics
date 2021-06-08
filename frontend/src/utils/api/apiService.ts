@@ -57,8 +57,31 @@ export class ApiService {
       const content = await result.json();
       return {
         status: result.status,
-        data: content.data,
-        error: content.error,
+        data: content,
+        error: null,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        data: 'Internal Server Error',
+        error: error.message,
+      };
+    }
+  }
+
+  static async take_foot() {
+    try {
+      const result = await fetch(
+        `${config.rpi_endpoint}${endpoints.TAKE_FOOT}`,
+        {
+          ...requestOptions_GET,
+        }
+      );
+      const content = await result.json();
+      return {
+        status: result.status,
+        data: content,
+        error: null,
       };
     } catch (error) {
       return {
