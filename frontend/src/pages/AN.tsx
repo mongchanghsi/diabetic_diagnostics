@@ -9,14 +9,14 @@ const AN = () => {
   const history = useHistory();
   const [photoStatus, setPhotoStatus] =
     useState<'waiting' | 'taking' | 'finished'>('waiting');
+
   const handleClick = async () => {
-    console.log('clicking');
     setPhotoStatus('taking');
     const result = await ApiService.take_an();
+    setPhotoStatus('finished');
     if (result.status === 200) {
       history.push('/foot');
     }
-    setPhotoStatus('finished');
   };
 
   return (
