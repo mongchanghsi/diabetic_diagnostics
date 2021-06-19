@@ -6,7 +6,7 @@ def foot_take_photo():
   file_date_time = now.strftime("%m%d%Y-%H%M%S")
   file_name = 'foot/foot_' + file_date_time + '.jpeg'
 
-  device_input = 'video0'
+  device_input = 'video2'
 
   input_command = 'fswebcam --device /dev/' + device_input + ' ' + file_name
 
