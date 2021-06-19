@@ -4,6 +4,8 @@ cnn_model/Data
 flask_backend/models/.ipynb_checkpoints
 flask_backend/__pycache__
 flask_backend/utils/__pycache__
+flask_backend/an
+flask_backend/foot
 frontend/node_modules
 frontend/.env
 node_backend/node_modules
