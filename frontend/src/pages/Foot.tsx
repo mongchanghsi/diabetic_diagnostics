@@ -4,6 +4,11 @@ import { useHistory } from 'react-router-dom';
 import './temp.css';
 import LoadingGIF from '../assets/loading-gif.gif';
 import { ApiService } from '../utils/api/apiService';
+import store from '../store';
+import {
+  storeLeftFootImage,
+  storeRightFootImage,
+} from '../utils/actions/actions';
 
 const Foot = () => {
   const history = useHistory();
@@ -11,10 +16,17 @@ const Foot = () => {
   const [photoStatus, setPhotoStatus] =
     useState<'waiting' | 'taking' | 'finished'>('waiting');
 
+  const saveImageInDB = async () => {
+    console.log('this is coming from saveImageInDB');
+    console.log(store.getState());
+  };
+
   const firstPhoto = async () => {
     setPhotoStatus('taking');
     const result = await ApiService.take_foot();
     if (result.status === 200) {
+      console.log('stage1', result.data);
+      store.dispatch(storeLeftFootImage(result.data.base64_image));
       setStage1(false);
       setPhotoStatus('waiting');
     } else {
@@ -26,6 +38,11 @@ const Foot = () => {
     setPhotoStatus('taking');
     const result = await ApiService.take_foot();
     if (result.status === 200) {
+      console.log('stage2', result.data);
+      store.dispatch(storeRightFootImage(result.data.base64_image));
+
+      saveImageInDB();
+
       history.push('/result');
     } else {
       setPhotoStatus('finished');

@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import './temp.css';
 import LoadingGIF from '../assets/loading-gif.gif';
 import { ApiService } from '../utils/api/apiService';
+import store from '../store';
+import { storeANImage } from '../utils/actions/actions';
 
 const AN = () => {
   const history = useHistory();
@@ -15,6 +17,8 @@ const AN = () => {
     const result = await ApiService.take_an();
     setPhotoStatus('finished');
     if (result.status === 200) {
+      // console.log(result.data);
+      store.dispatch(storeANImage(result.data.base64_image));
       history.push('/foot');
     }
   };
