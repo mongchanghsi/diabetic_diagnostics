@@ -2,8 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
+  // ManyToMany,
+  // JoinTable,
   OneToMany,
 } from 'typeorm';
 import { Image } from './Image.entity';
@@ -31,6 +31,6 @@ export class User {
   @Column()
   status!: boolean;
 
-  // @OneToMany(() => Image, (image) => image.nric)
-  // image!: [Image];
+  @OneToMany(() => Image, (image) => image.user)
+  image!: Image[];
 }

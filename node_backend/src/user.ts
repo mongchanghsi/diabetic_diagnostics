@@ -42,7 +42,7 @@ router.post(
 );
 
 router.put(
-  '/update',
+  '/update_details',
   async (req: Request, res: Response): Promise<Response> => {
     const nric: string = req.body.nric;
     const height: number = req.body.height;
@@ -59,6 +59,32 @@ router.put(
 
       user.height = height;
       user.weight = weight;
+
+      await userRepository.save(user);
+
+      return res.json({ data: user });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+);
+
+router.put(
+  '/update_status',
+  async (req: Request, res: Response): Promise<Response> => {
+    const nric: string = req.body.nric;
+    const status: string = req.body.status;
+
+    if (!nric) return res.status(400).json({ message: 'No NRIC found' });
+    if (!status) return res.status(400).json({ message: 'No status found' });
+
+    try {
+      const userRepository = getRepository(User);
+      const user = await userRepository.findOne({ nric });
+      if (!user) return res.status(404).json({ message: 'No such user found' });
+
+      user.status = status === 'positive' ? true : false;
 
       await userRepository.save(user);
 
