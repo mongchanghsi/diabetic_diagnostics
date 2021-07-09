@@ -34,6 +34,7 @@ const UserDetails: React.FC = () => {
     setData({ ...data, nric: store.getState().user.nric });
     // Use Redux extract the NRIC in store do a search on database for their details
     // Thereafter populate the fills
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
