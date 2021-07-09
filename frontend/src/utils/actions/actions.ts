@@ -1,4 +1,12 @@
-import { ENGLISH, MANDARIN, UPDATE_NRIC, CLEAR_NRIC } from './actionTypes';
+import {
+  ENGLISH,
+  MANDARIN,
+  UPDATE_NRIC,
+  CLEAR_NRIC,
+  SAVE_AN,
+  SAVE_LEFT_FOOT,
+  SAVE_RIGHT_FOOT,
+} from './actionTypes';
 
 export const changeLangToEnglish = () => {
   return {
@@ -32,6 +40,33 @@ export const clearNRIC = () => {
     type: CLEAR_NRIC,
     paylod: {
       nric: '',
+    },
+  };
+};
+
+export const storeANImage = (image_base64: string) => {
+  return {
+    type: SAVE_AN,
+    payload: {
+      image_base64,
+    },
+  };
+};
+
+export const storeLeftFootImage = (image_base64: string) => {
+  return {
+    type: SAVE_LEFT_FOOT,
+    payload: {
+      image_base64,
+    },
+  };
+};
+
+export const storeRightFootImage = (image_base64: string) => {
+  return {
+    type: SAVE_RIGHT_FOOT,
+    payload: {
+      image_base64,
     },
   };
 };
