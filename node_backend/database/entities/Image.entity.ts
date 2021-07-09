@@ -2,8 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
+  // ManyToMany,
+  // JoinTable,
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
@@ -15,18 +15,12 @@ export class Image {
   id!: string;
 
   @Column()
-  nric!: string;
+  name!: string;
 
   @Column()
-  an!: string;
+  base64!: string;
 
-  @Column()
-  foot_left!: string;
-
-  @Column()
-  foot_right!: string;
-
-  // @ManyToOne(() => User, (user) => user.image)
-  // @JoinColumn({ name: 'user' })
-  // user!: User;
+  @ManyToOne(() => User, (user) => user.image)
+  @JoinColumn({ name: 'user' })
+  user!: User;
 }
